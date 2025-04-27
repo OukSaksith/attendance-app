@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:http/http.dart' as http;
@@ -12,6 +14,25 @@ class AttendanceScannerPage extends StatefulWidget {
 class _AttendanceScannerPageState extends State<AttendanceScannerPage> {
   bool _isScanned = false;
   String? _resultMessage;
+
+  // This function generates a random ID
+  String generateRandomId() {
+    final random = Random();
+    return 'ID${random.nextInt(10000)}';  // Example: ID1234
+  }
+
+  // This function generates a random name from a list
+  String generateRandomName() {
+    const names = [
+      'Thoung Chanmony',
+      'Kong Rothanak Visal',
+      'Sam Rithearum',
+      'Ouk Saksith',
+      'Koeun Vanny'
+    ];
+    final random = Random();
+    return names[random.nextInt(names.length)];
+  }
 
   Future<void> saveAttendance(String studentId, String studentName, String qrCode) async {
     try {
@@ -43,16 +64,27 @@ class _AttendanceScannerPageState extends State<AttendanceScannerPage> {
 
   void _onDetect(Barcode barcode) {
     if (!_isScanned) {
+      // final String? code = barcode.rawValue;
+      // // Decode the base64 string
+      // String decodedString = utf8.decode(base64.decode(barcode.rawValue.toString()));
+      // Map<String, dynamic> jsonObject = jsonDecode(decodedString);
+      //
+      // if (code != null) {
+      //   setState(() {
+      //     _isScanned = true;
+      //   });
+      //   saveAttendance(jsonObject['student_id'],jsonObject['student_name'],code);  // Save attendance to Django
+      // }
+
       final String? code = barcode.rawValue;
-      // Decode the base64 string
-      String decodedString = utf8.decode(base64.decode(barcode.rawValue.toString()));
-      Map<String, dynamic> jsonObject = jsonDecode(decodedString);
+      String randomId = generateRandomId();
+      String randomName = generateRandomName();
 
       if (code != null) {
         setState(() {
           _isScanned = true;
         });
-        saveAttendance(jsonObject['student_id'],jsonObject['student_name'],code);  // Save attendance to Django
+        saveAttendance(randomId, randomName,code);  // Save attendance to Django
       }
     }
   }

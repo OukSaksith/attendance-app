@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../services/api_service.dart'; // your own service file
+import 'dart:convert'; // For decoding Base64
+import 'dart:typed_data'; // For handling bytes
+import 'package:qr_flutter/qr_flutter.dart';
 
 class GenerateQRCodePage extends StatefulWidget {
   @override
@@ -26,6 +29,7 @@ class _GenerateQRCodePageState extends State<GenerateQRCodePage> {
         final data = json.decode(response.body);
         setState(() {
           qrImageUrl = data['qr_image_url'];
+          // qrImageUrl = data['qr_image_base'];
           isLoading = false;
         });
       } else {
@@ -61,6 +65,17 @@ class _GenerateQRCodePageState extends State<GenerateQRCodePage> {
               height: 250,
               fit: BoxFit.cover,
             ),
+            // Image.memory(
+            //   base64Decode(qrImageUrl!),
+            //   width: 250,
+            //   height: 250,
+            //   fit: BoxFit.cover,
+            // ),
+            // QrImageView(
+            //   data: qrImageUrl!, // <-- Use the base64 text directly!
+            //   version: QrVersions.auto,
+            //   size: 200.0,
+            // ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: generateQRCode,
