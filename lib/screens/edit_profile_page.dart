@@ -88,108 +88,60 @@ class _EditProfilePageState extends State<EditProfilePage> {
     });
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(title: const Text('Edit Profile')),
-  //     body: isLoading
-  //         ? const Center(child: CircularProgressIndicator())
-  //         : SingleChildScrollView(
-  //       padding: const EdgeInsets.all(16),
-  //       child: Column(
-  //         children: [
-  //           ProfileImagePicker(
-  //             currentImage: imageFile,
-  //             onImagePicked: (file) => setState(() => imageFile = file),
-  //           ),
-  //           if (imageFile == null && imageUrl != null)
-  //             CircleAvatar(
-  //               radius: 50,
-  //               backgroundImage: NetworkImage(ApiService.APIDoc["baseurl"].toString()+imageUrl!),
-  //             ),
-  //           const SizedBox(height: 20),
-  //           TextField(controller: nameController, decoration: const InputDecoration(labelText: 'Name')),
-  //           TextField(controller: emailController, decoration: const InputDecoration(labelText: 'Email')),
-  //           TextField(controller: phoneController, keyboardType: TextInputType.phone, decoration: const InputDecoration(labelText: 'Phone')),
-  //           TextField(controller: dobController, readOnly: true, decoration: const InputDecoration(labelText: 'Date of Birth'), onTap: pickDOB),
-  //           TextField(controller: idCardController, decoration: const InputDecoration(labelText: 'ID Card')),
-  //           DropdownButton<String>(
-  //             value: gender,
-  //             items: const [
-  //               DropdownMenuItem(value: 'M', child: Text('Male')),
-  //               DropdownMenuItem(value: 'F', child: Text('Female')),
-  //               DropdownMenuItem(value: 'O', child: Text('Other')),
-  //             ],
-  //             onChanged: (value) => setState(() => gender = value!),
-  //           ),
-  //           const SizedBox(height: 20),
-  //           ElevatedButton(onPressed: saveProfile, child: const Text('Save Profile')),
-  //           if (message.isNotEmpty)
-  //             Padding(
-  //               padding: const EdgeInsets.only(top: 10),
-  //               child: Text(
-  //                 message,
-  //                 style: TextStyle(color: message.contains('✅') ? Colors.green : Colors.red),
-  //               ),
-  //             ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: const Text('Edit Profile', style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.deepPurple,
+        title: const Text(
+          'Edit Profile',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.grey[400],
         elevation: 0,
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Profile Image Picker
-            ProfileImagePicker(
-              currentImage: imageFile,
-              onImagePicked: (file) => setState(() => imageFile = file),
+            Center(
+              child: ProfileImagePicker(
+                currentImage: imageFile,
+                onImagePicked: (file) => setState(() => imageFile = file),
+              ),
             ),
             if (imageFile == null && imageUrl != null)
               Center(
                 child: CircleAvatar(
                   radius: 50,
-                  backgroundImage: NetworkImage(ApiService.APIDoc["baseurl"].toString() + imageUrl!),
+                  backgroundImage: NetworkImage(
+                    ApiService.APIDoc["baseurl"].toString() + imageUrl!,
+                  ),
                 ),
               ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
 
-            // Name Field
             _buildTextField(
               controller: nameController,
               label: 'Name',
               icon: Icons.person,
             ),
-
-            // Email Field
             _buildTextField(
               controller: emailController,
               label: 'Email',
               icon: Icons.email,
+              keyboardType: TextInputType.emailAddress,
             ),
-
-            // Phone Field
             _buildTextField(
               controller: phoneController,
               label: 'Phone',
               icon: Icons.phone,
               keyboardType: TextInputType.phone,
             ),
-
-            // Date of Birth Field
             _buildTextField(
               controller: dobController,
               label: 'Date of Birth',
@@ -197,8 +149,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
               readOnly: true,
               onTap: pickDOB,
             ),
-
-            // ID Card Field
             _buildTextField(
               controller: idCardController,
               label: 'ID Card',
@@ -207,41 +157,51 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
             const SizedBox(height: 10),
 
-            // Gender Dropdown
+            const Text(
+              'Gender',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 8),
             _buildDropdownField(),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
 
-            // Save Button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: saveProfile,
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: Colors.deepPurpleAccent,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  elevation: 5,
                 ),
                 child: const Text(
                   'Save',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
 
-            // Error or Success Message
             if (message.isNotEmpty)
               Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Text(
-                  message,
-                  style: TextStyle(
-                    color: message.contains('✅') ? Colors.green : Colors.red,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                padding: const EdgeInsets.only(top: 16),
+                child: Center(
+                  child: Text(
+                    message,
+                    style: TextStyle(
+                      color: message.contains('✅') ? Colors.green : Colors.red,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),
@@ -251,7 +211,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-// Helper method to create text fields with consistent styling
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,
@@ -261,7 +220,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     GestureTapCallback? onTap,
   }) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 20),
       child: TextField(
         controller: controller,
         readOnly: readOnly,
@@ -270,30 +229,35 @@ class _EditProfilePageState extends State<EditProfilePage> {
         style: const TextStyle(fontSize: 16, color: Colors.black),
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: const TextStyle(color: Colors.black),
+          labelStyle: const TextStyle(color: Colors.black54),
+          prefixIcon: Icon(icon, color: Colors.black87),
           filled: true,
-          fillColor: Colors.white.withOpacity(0.2),
+          fillColor: Colors.grey[300],
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
-            borderSide: const BorderSide(color: Colors.white),
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
           ),
-          prefixIcon: Icon(icon, color: Colors.black),
         ),
       ),
     );
   }
 
-// Helper method to create the gender dropdown
   Widget _buildDropdownField() {
     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white.withOpacity(0.2),
+        color: Colors.grey[300],
+        borderRadius: BorderRadius.circular(12),
       ),
       child: DropdownButton<String>(
         value: gender,
         isExpanded: true,
-        style: const TextStyle(color: Colors.black, fontSize: 16),
+        underline: const SizedBox(),
+        icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+        style: const TextStyle(
+          color: Colors.black,
+          fontSize: 16,
+        ),
         dropdownColor: Colors.white,
         items: const [
           DropdownMenuItem(value: 'M', child: Text('Male')),

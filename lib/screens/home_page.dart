@@ -18,150 +18,109 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       title: const Text('Home'),
-  //       actions: [
-  //         IconButton(
-  //           onPressed: () => logout(context),
-  //           icon: const Icon(Icons.logout),
-  //         ),
-  //       ],
-  //     ),
-  //     body: Center(
-  //       child: Column(
-  //         mainAxisAlignment: MainAxisAlignment.center,
-  //         children: [
-  //           Text('Hello, $username!', style: const TextStyle(fontSize: 24)),
-  //           const SizedBox(height: 20),
-  //           ElevatedButton(
-  //             onPressed: () => Navigator.push(
-  //               context,
-  //               MaterialPageRoute(builder: (_) => const EditProfilePage()),
-  //             ),
-  //             child: const Text('Edit Profile'),
-  //           ),
-  //           ElevatedButton(
-  //             onPressed: () => Navigator.push(
-  //               context,
-  //               // MaterialPageRoute(builder: (_) => AttendanceScannerPage()),
-  //               MaterialPageRoute(builder: (_) => AttendanceScannerPage()),
-  //             ),
-  //             child: const Text('Scan'),
-  //           ),
-  //           ElevatedButton(
-  //             onPressed: () => Navigator.push(
-  //               context,
-  //               MaterialPageRoute(builder: (_) => GenerateQRCodePage()),
-  //             ),
-  //             child: const Text('Get QR Code'),
-  //           ),
-  //
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.grey[400],
+        elevation: 0,
         title: const Text(
-          '🏠 Home',
+          'Home',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
+            fontWeight: FontWeight.w600,
           ),
         ),
         actions: [
           IconButton(
             onPressed: () => logout(context),
-            icon: const Icon(Icons.logout,  color: Colors.white),
+            icon: const Icon(Icons.logout, color: Colors.white),
+            tooltip: 'Logout',
           ),
         ],
       ),
       body: Container(
         width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.deepPurple, Colors.purpleAccent],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
+        color: Colors.grey[100],
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Greeting, $username!',
-                style: const TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.person, size: 72, color: Colors.blue),
+                const SizedBox(height: 16),
+                Text(
+                  'Welcome,  ${username[0].toUpperCase()}${username.substring(1)} 👋',
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black87,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 30),
+                const SizedBox(height: 40),
 
-              _buildButton(
-                context,
-                title: 'Edit Profile',
-                color: Colors.teal,
-                onPressed: () => Navigator.push(
+                _buildButton(
                   context,
-                  MaterialPageRoute(builder: (_) => const EditProfilePage()),
+                  title: 'Edit Profile',
+                  color: Colors.teal,
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const EditProfilePage()),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 15),
+                const SizedBox(height: 16),
 
-              _buildButton(
-                context,
-                title: 'Scan',
-                color: Colors.orange,
-                onPressed: () => Navigator.push(
+                _buildButton(
                   context,
-                  MaterialPageRoute(builder: (_) => AttendanceScannerPage()),
+                  title: 'Scan',
+                  color: Colors.orange,
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => AttendanceScannerPage()),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 15),
+                const SizedBox(height: 16),
 
-              _buildButton(
-                context,
-                title: 'Get QR Code',
-                color: Colors.blue,
-                onPressed: () => Navigator.push(
+                _buildButton(
                   context,
-                  MaterialPageRoute(builder: (_) => GenerateQRCodePage()),
+                  title: 'Get QR Code',
+                  color: Colors.blue,
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => GenerateQRCodePage()),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildButton(BuildContext context,
-      {required String title, required Color color, required VoidCallback onPressed}) {
+  Widget _buildButton(BuildContext context, {
+    required String title,
+    required Color color,
+    required VoidCallback onPressed,
+  }) {
     return SizedBox(
-      width: 200,
+      width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 15),
           backgroundColor: color,
+          padding: const EdgeInsets.symmetric(vertical: 14),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(10),
           ),
-          elevation: 5,
+          elevation: 1.5,
         ),
         onPressed: onPressed,
         child: Text(
           title,
           style: const TextStyle(
-            fontSize: 18,
+            fontSize: 16,
             fontWeight: FontWeight.w500,
             color: Colors.white,
           ),
@@ -169,5 +128,6 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
 }
 

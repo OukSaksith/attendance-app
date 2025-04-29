@@ -49,10 +49,19 @@ class _GenerateQRCodePageState extends State<GenerateQRCodePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: Text('Generate QR Code'),
+        title: const Text('Generate QR Code'),
+        backgroundColor: Colors.grey[400],
+        elevation: 1,
+        centerTitle: true,
+        foregroundColor: Colors.black87,
       ),
-      body: Center(
+
+      body: Container(
+        padding: EdgeInsets.all(15),
+        width: double.infinity,
+        color: Colors.grey[100],
         child: isLoading
             ? CircularProgressIndicator()
             : qrImageUrl != null
@@ -76,18 +85,46 @@ class _GenerateQRCodePageState extends State<GenerateQRCodePage> {
             //   version: QrVersions.auto,
             //   size: 200.0,
             // ),
-            SizedBox(height: 20),
+
+            SizedBox(height: 40),
             ElevatedButton(
               onPressed: generateQRCode,
-              child: Text('Generate New QR Code'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: Text(
+                'Generate New QR Code',
+                style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),),
+
             ),
           ],
         )
             : ElevatedButton(
           onPressed: generateQRCode,
-          child: Text('Generate QR Code'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          child: Text(
+            'Generate New QR Code',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),),
         ),
-      ),
-    );
+        ),
+      );
   }
 }

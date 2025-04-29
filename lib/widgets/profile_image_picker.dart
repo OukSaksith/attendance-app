@@ -36,8 +36,9 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
       onTap: pickImage,
       child: CircleAvatar(
         radius: 50,
+        backgroundColor: Colors.blue[300],
         backgroundImage: imageFile != null ? FileImage(imageFile!) : null,
-        child: imageFile == null ? const Icon(Icons.camera_alt, size: 40) : null,
+        child: imageFile == null ? const Icon(Icons.camera_alt, size: 40, color: Colors.white,) : null,
       ),
     );
   }
